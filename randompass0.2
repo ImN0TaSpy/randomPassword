@@ -1,0 +1,44 @@
+import random
+import string
+
+
+def parameters(count_pass, difficulty):
+    if str.isdigit(count_pass):
+        count_pass = int(count_pass)
+        if difficulty == 1:
+            print(random_pass_lvl_1(count_pass))
+        elif difficulty == 2:
+            print(random_pass_lvl_2(count_pass))
+        else:
+            print(random_pass_lvl_3(count_pass))
+    else:
+        print("Введите число, а не символ!!!")
+
+def random_pass_lvl_1(count_pass):
+    password: str = string.ascii_letters
+    password = ''.join(random.sample(password, count_pass))
+    return password
+
+
+def random_pass_lvl_2(count_pass):
+    password: str = string.ascii_letters + string.digits
+    password = ''.join(random.sample(password, count_pass))
+    return password
+
+
+def random_pass_lvl_3(count_pass):
+    password: str = string.printable
+    password = ''.join(random.sample(password, count_pass))
+    return password
+
+
+count_pass: str = input('How many chars you want?\n')
+difficulty = int(input("Input difficulty lvl from 1 to 3\n"))
+parameters(count_pass,difficulty)
+
+while True:
+    reroll = input('Do u like my password? Yes/No')
+    if reroll == 'No':
+        parameters(count_pass,difficulty)
+    elif reroll == "Yes":
+        quit("Thanks for using my password generator")
