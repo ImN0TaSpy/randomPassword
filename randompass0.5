@@ -1,0 +1,66 @@
+import random
+import string
+
+
+def difficulty(): # Выбор сложности и возврат её (от 1 до 3) обратно
+
+    strong = int(input("Input difficulty lvl from 1 to 3\n"))
+    if strong == 1 or 2 or 3:
+        return int(strong)
+    else:
+        difficulty()
+
+
+def random_pass(number_of_elements, difficulty): #Генератор пароля, 1 переменная - колличство эл-тов, 2 - сложность
+    if difficulty == 1:
+        password = string.ascii_letters
+        password = ''.join(random.sample(password, number_of_elements))
+        return password
+
+    elif difficulty == 2:
+        password = string.ascii_letters + string.digits
+        password = ''.join(random.sample(password, number_of_elements))
+        return password
+
+    else:
+        spec_list = '+!@#$%^+_-=)('
+        password = string.ascii_letters + spec_list
+        password = ''.join(random.sample(password, number_of_elements))
+        return password
+
+
+number_of_elements = input('How many chars you want?\n')
+
+while True:
+
+    if str.isdigit(number_of_elements) == True and int(number_of_elements)<50:
+        number_of_elements = int(number_of_elements)
+        break
+    else:
+        print("Вводите ЧИСЛО от 1 до 50!!!")
+        number_of_elements = input('How many chars you want?\n')
+
+
+
+if int(number_of_elements) <= 6: # Предупреждение о слишком коротком пароле
+    answer = input('Password is not strong, do u wanna continue? Yes/No\n')
+    if str.lower(answer) == 'no':
+        number_of_elements = int(input('How many chars you want then?\n'))
+        strong = difficulty()
+        print(random_pass(number_of_elements, strong))
+    elif str.lower(answer) == 'yes':
+        strong = difficulty()
+        print(random_pass(number_of_elements, strong))
+    else:
+        input("Input Yes or No\n")
+        answer = input('Password is not strong, do u wanna continue? Yes/No\n')
+else:
+    strong = difficulty()
+    while True: # Вызов функции генератора пароля с предложением заменить не понравивщийся
+        final_pass = (random_pass(number_of_elements, strong))
+        print(final_pass)
+        answer = input('Do You Like This Password? Yes/No\n')
+        if answer.lower() == 'yes':
+            quit('Thanks for using my generator')
+        else:
+            final_pass = (random_pass(number_of_elements, strong))
